@@ -37,7 +37,8 @@ global $CFG, $USER, $PAGE, $OUTPUT;
 
 // Check permissions.
 require_login(SITEID, false);
-$systemcontext = get_context_instance(CONTEXT_SYSTEM);
+//$systemcontext = get_context_instance(CONTEXT_SYSTEM);
+$systemcontext = CONTEXT_SYSTEM::instance();
 require_capability('report/cpd:userview', $systemcontext);
 
 // Log request
@@ -74,7 +75,8 @@ if (!empty($download) || !empty($print) || !empty($xls))
 	$filter_data->cpdyearid = $cpdyearid;
 	$filter_data->from = optional_param('from', NULL, PARAM_RAW);
 	$filter_data->to = optional_param('to', NULL, PARAM_RAW);
-	$filter_data->userid = $USER->id;
+        $filter_data->userid = $USER->id;
+	//$filter_data->userid = optional_param('userid', $USER->id, PARAM_INT);
 	
 	if (($cpd_records = get_cpd_records($filter_data)) && !empty($download))
 	{

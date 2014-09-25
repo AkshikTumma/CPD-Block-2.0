@@ -46,13 +46,13 @@ class block_cpd_block extends block_base
         }
         
         $this->content = new stdClass;
-        $context = get_context_instance(CONTEXT_USER, $USER->id, IGNORE_MISSING); //context_user::instance($USER->id, IGNORE_MISSING); 
-        
+        //$context = get_context_instance(CONTEXT_USER, $USER->id, IGNORE_MISSING); 
+        $context = CONTEXT_USER::instance($USER->id, IGNORE_MISSING); 
         if( $context )
         {
             if(has_capability('report/cpd:userview', $context))
             {
-                $this->content->text .= '<table><tr><td><a href=\''.$CFG->wwwroot.'/blocks/cpd_block/index.php\'>'.get_string('enter_view_report','block_cpd_block').'</a></td></tr>';
+                $this->content->text = '<table><tr><td><a href=\''.$CFG->wwwroot.'/blocks/cpd_block/index.php\'>'.get_string('enter_view_report','block_cpd_block').'</a></td></tr>';
                 if(has_capability('report/cpd:adminview', $context))
                 {
                     $this->content->text .= '<tr><td><a href=\''.$CFG->wwwroot.'/blocks/cpd_block/adminview.php\'>'.get_string('cpd_reports','block_cpd_block').'</a></td></tr>';

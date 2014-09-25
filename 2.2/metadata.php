@@ -38,7 +38,8 @@ global $DB;
 
 // Check permissions.
 require_login(SITEID, false);
-$systemcontext = get_context_instance(CONTEXT_SYSTEM);
+//$systemcontext = get_context_instance(CONTEXT_SYSTEM);
+$systemcontext = CONTEXT_SYSTEM::instance();
 require_capability('report/cpd:superadminview', $systemcontext);
 
 $id = optional_param('id', NULL, PARAM_INT);

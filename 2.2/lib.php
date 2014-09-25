@@ -1,5 +1,5 @@
 <?php
-
+//iini_set('memory_limit', '-1');
 // This file is part of CPD Block for Moodle 2.1+
 //
 // CPD Block for Moodle is free software: you can redistribute it and/or modify
