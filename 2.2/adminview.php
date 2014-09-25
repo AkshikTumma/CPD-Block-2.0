@@ -39,7 +39,8 @@ $PAGE_SIZE = 5;
 
 // Check permissions.
 require_login();
-$systemcontext = get_context_instance(CONTEXT_SYSTEM);
+//$systemcontext = get_context_instance(CONTEXT_SYSTEM);
+$systemcontext = CONTEXT_SYSTEM::instance();
 $PAGE->set_context( $systemcontext );
 require_capability('report/cpd:adminview', $systemcontext);
 
