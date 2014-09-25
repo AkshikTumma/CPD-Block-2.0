@@ -4,7 +4,7 @@ Use Moodle to record and report on your employees' continuing professional devel
 
 Compatibility
 
-Moodle 2.1+
+Moodle 2.6+
 
 How to install
 
