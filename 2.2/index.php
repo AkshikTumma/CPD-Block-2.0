@@ -51,9 +51,6 @@ $cpdyearid = optional_param('cpdyearid', NULL, PARAM_INT); // Current CPD year i
 $download = optional_param('download', NULL, PARAM_RAW);
 $print = optional_param('print', NULL, PARAM_RAW);
 $xls = optional_param('xls', NULL, PARAM_RAW);
-//Set type of userid to avoid warning: setType() defaulting to PARAM_RAW
-$USER->id = optional_param('userid', NULL, PARAM_INT);
-
 
 // CPD Report headers
 $columns = array(
@@ -176,13 +173,13 @@ if ($cpd_records) {
     if (!empty($print)) {
         // Disclaimer
         echo '	<table class="disclaimer" cellpadding="0" cellspacing="5" border="0">
-                    <tr>
-                        <td class="name">I confirm that the above is a true record of CPD undertaken by me.</td>
-                        <td class="fillbox">&nbsp;</td>
-                        <td class="date">Date</td>
-                        <td class="fillbox date">&nbsp;</td>
-                    </tr>
-		</table>';
+                <tr>
+                    <td class="name">I confirm that the above is a true record of CPD undertaken by me.</td>
+                    <td class="fillbox">&nbsp;</td>
+                    <td class="date">Date</td>
+                    <td class="fillbox date">&nbsp;</td>
+                </tr>
+                </table>';
     }
 
     echo '<table class="boxalignleft"><tr class="tr_btn">';
