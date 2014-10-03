@@ -30,9 +30,12 @@ class edit_activity_form extends moodleform {
         $mform = & $this->_form;
         $mform->addElement('header', 'addactivity', 'Add an activity');
         $mform->addElement('hidden', 'cpdyearid', $this->_customdata['cpdyearid']);
+        $mform->setType('cpdyearid', PARAM_INT);
         $mform->addElement('hidden', 'process', '1');
+        $mform->setType('process', PARAM_INT);
         if ($this->_customdata['cpdid']) {
             $mform->addElement('hidden', 'id', $this->_customdata['cpdid']); // This updates a CPD Report
+            $mform->setType('id', PARAM_INT);
         }
 
         $mform->addElement('textarea', 'objective', 'Training/Event Title', array('rows' => '2', 'cols' => '40'));
@@ -45,7 +48,7 @@ class edit_activity_form extends moodleform {
         }
 
         $mform->addElement('text', 'ceus', 'CEUs', array('rows' => '2', 'cols' => '10'));
-
+        $mform->setType('ceus', PARAM_TEXT);
         // Get CPD start and end years
         $startyear = date('Y') - 5;
         $endyear = date('Y') + 5;
