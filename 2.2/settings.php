@@ -14,7 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with CPD Block for Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
  * This page is a part of CPD Block, a CPD Report module conversion for Moodle 2.1.
  * It was done by Konstiantyn Kononenkov and sponsored by Iowa State University 
@@ -27,6 +27,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
-    $link ='<a href="'.$CFG->wwwroot.'/blocks/cpd_block/metadata.php">'.get_string('cpd_settings', 'block_cpd_block').'</a>';
+    $link = '<a href="' . $CFG->wwwroot . '/blocks/cpd_block/metadata.php">' . get_string('cpd_settings', 'block_cpd_block') . '</a>';
     $settings->add(new admin_setting_heading('block_cpd_block_addheading', '', $link));
 }

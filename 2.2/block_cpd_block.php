@@ -23,95 +23,87 @@
  * @package   cpd-block
  * @copyright 2011 Child Welfare Research and Training Project
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-*/
+ */
 
-class block_cpd_block extends block_base
-{
-    public function init()
-    {
-       $this->title = get_string('cpd_block', 'block_cpd_block');
+class block_cpd_block extends block_base {
+
+    public function init() {
+        $this->title = get_string('cpd_block', 'block_cpd_block');
     }
-    
+
     /*
      * Creating the content of the block depending on the permissions of
      * the user (whether admin permissions are set or not)
      */
-    public function get_content()
-    {
+
+    public function get_content() {
         global $CFG, $USER;
-        
-        if( $this->content !== NULL )
-        {
+
+        if ($this->content !== NULL) {
             return $this->content;
         }
-        
+
         $this->content = new stdClass;
         //$context = get_context_instance(CONTEXT_USER, $USER->id, IGNORE_MISSING); 
-        $context = CONTEXT_USER::instance($USER->id, IGNORE_MISSING); 
-        if( $context )
-        {
-            if(has_capability('report/cpd:userview', $context))
-            {
-                $this->content->text = '<table><tr><td><a href=\''.$CFG->wwwroot.'/blocks/cpd_block/index.php\'>'.get_string('enter_view_report','block_cpd_block').'</a></td></tr>';
-                if(has_capability('report/cpd:adminview', $context))
-                {
-                    $this->content->text .= '<tr><td><a href=\''.$CFG->wwwroot.'/blocks/cpd_block/adminview.php\'>'.get_string('cpd_reports','block_cpd_block').'</a></td></tr>';
-
-                    if(has_capability('report/cpd:superadminview', $context))
-                    {
-                        $this->content->text .= '<tr><td><a href=\''.$CFG->wwwroot.'/blocks/cpd_block/metadata.php\'>'.get_string('settings_str','block_cpd_block').'</a></td></tr></table>';
-                    }
-                    else
-                    {
+        $context = CONTEXT_USER::instance($USER->id, IGNORE_MISSING);
+        if ($context) {
+            if (has_capability('report/cpd:userview', $context)) {
+                $this->content->text = '<table><tr><td><a href=\'' . $CFG->wwwroot . '/blocks/cpd_block/index.php\'>'
+                        . get_string('enter_view_report', 'block_cpd_block') . '</a></td></tr>';
+                if (has_capability('report/cpd:adminview', $context)) {
+                    $this->content->text .= '<tr><td><a href=\'' . $CFG->wwwroot . '/blocks/cpd_block/adminview.php\'>'
+                            . get_string('cpd_reports', 'block_cpd_block') . '</a></td></tr>';
+                    if (has_capability('report/cpd:superadminview', $context)) {
+                        $this->content->text .= '<tr><td><a href=\'' . $CFG->wwwroot . '/blocks/cpd_block/metadata.php\'>'
+                                . get_string('settings_str', 'block_cpd_block') . '</a></td></tr></table>';
+                    } else {
                         $this->content->text .= '</table>';
                     }
-                }
-                else
-                {
+                } else {
                     $this->content->text .= '</table>';
                 }
 
-                $this->content->footer = '';//No info in footer
+                $this->content->footer = ''; //No info in footer
             }
         }
-        
+
         return $this->content;
     }
-    
+
     /*
      * Add css class attribute to block members, in case that appearance 
      * will need to be changed
      */
-    public function html_attiributes()
-    {
+
+    public function html_attiributes() {
         $attributes = parent::html_attributes();
         $attributes['class'] .= ' block_' . $this->name();
-        
+
         return $attributes;
     }
-    
+
     /*
      * The block is currently available only at the frontpage of
      * the website
      */
-    public function applicable_formats()
-    {
+
+    public function applicable_formats() {
         return array(
             'site' => true,
         );
     }
-    
-    public function instance_allow_config()
-    {
+
+    public function instance_allow_config() {
         return false;
     }
-    
+
     /*
      * Allow the configuration of the block; make the settings page appear in 
      * admin tree
      */
-    public function has_config()
-    {
+
+    public function has_config() {
         return true;
     }
+
 }

@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <XMLDB PATH="admin/report/cpd/db" VERSION="20111129" COMMENT="XMLDB file for Moodle admin/report/cpd"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
 >
-  <TABLES>
-    <TABLE NAME="cpd" COMMENT="Defines user CPDs" NEXT="cpd_activity_type">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="objective"/>
-        <FIELD NAME="objective" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="development_need"/>
-        <FIELD NAME="development_need" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="objective" NEXT="activitytypeid"/>
-        <FIELD NAME="activitytypeid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="development_need" NEXT="activity"/>
-        <FIELD NAME="activity" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="activitytypeid" NEXT="duedate"/>
-        <FIELD NAME="duedate" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="activity" NEXT="startdate"/>
-        <FIELD NAME="startdate" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="duedate" NEXT="statusid"/>
-        <FIELD NAME="statusid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="startdate" NEXT="cpdyearid"/>
-        <FIELD NAME="cpdyearid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="statusid" NEXT="timetaken"/>
-        <FIELD NAME="timetaken" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="cpdyearid" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="timetaken" NEXT="ceus"/>
-        <FIELD NAME="ceus" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="description"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="cpd_user_fk"/>
-        <KEY NAME="cpd_user_fk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="cpd_activitytype_fk"/>
-        <KEY NAME="cpd_activitytype_fk" TYPE="foreign" FIELDS="activitytypeid" REFTABLE="cpd_activity_type" REFFIELDS="id" PREVIOUS="cpd_user_fk" NEXT="cpd_status_fk"/>
-        <KEY NAME="cpd_status_fk" TYPE="foreign" FIELDS="statusid" REFTABLE="cpd_status" REFFIELDS="id" PREVIOUS="cpd_activitytype_fk" NEXT="cpd_year_fk"/>
-        <KEY NAME="cpd_year_fk" TYPE="foreign" FIELDS="cpdyearid" REFTABLE="cpd_year" REFFIELDS="id" PREVIOUS="cpd_status_fk"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="cpd_activity_type" COMMENT="Defines the activity types" PREVIOUS="cpd" NEXT="cpd_status">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="cpd_status" COMMENT="Defines the statuses" PREVIOUS="cpd_activity_type" NEXT="cpd_year">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="display_order"/>
-        <FIELD NAME="display_order" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="name"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="cpd_status_name_unique"/>
-        <KEY NAME="cpd_status_name_unique" TYPE="unique" FIELDS="name" PREVIOUS="primary"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="cpd_year" COMMENT="Defines the periods to view CPD data" PREVIOUS="cpd_status">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="startdate"/>
-        <FIELD NAME="startdate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="enddate"/>
-        <FIELD NAME="enddate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="startdate"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-  </TABLES>
+    <TABLES>
+        <TABLE NAME="cpd" COMMENT="Defines user CPDs" NEXT="cpd_activity_type">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="objective"/>
+                <FIELD NAME="objective" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="development_need"/>
+                <FIELD NAME="development_need" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="objective" NEXT="activitytypeid"/>
+                <FIELD NAME="activitytypeid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="development_need" NEXT="activity"/>
+                <FIELD NAME="activity" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="activitytypeid" NEXT="duedate"/>
+                <FIELD NAME="duedate" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="activity" NEXT="startdate"/>
+                <FIELD NAME="startdate" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="duedate" NEXT="statusid"/>
+                <FIELD NAME="statusid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="startdate" NEXT="cpdyearid"/>
+                <FIELD NAME="cpdyearid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="statusid" NEXT="timetaken"/>
+                <FIELD NAME="timetaken" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="cpdyearid" NEXT="description"/>
+                <FIELD NAME="description" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="timetaken" NEXT="ceus"/>
+                <FIELD NAME="ceus" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="description"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="cpd_user_fk"/>
+                <KEY NAME="cpd_user_fk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary" NEXT="cpd_activitytype_fk"/>
+                <KEY NAME="cpd_activitytype_fk" TYPE="foreign" FIELDS="activitytypeid" REFTABLE="cpd_activity_type" REFFIELDS="id" PREVIOUS="cpd_user_fk" NEXT="cpd_status_fk"/>
+                <KEY NAME="cpd_status_fk" TYPE="foreign" FIELDS="statusid" REFTABLE="cpd_status" REFFIELDS="id" PREVIOUS="cpd_activitytype_fk" NEXT="cpd_year_fk"/>
+                <KEY NAME="cpd_year_fk" TYPE="foreign" FIELDS="cpdyearid" REFTABLE="cpd_year" REFFIELDS="id" PREVIOUS="cpd_status_fk"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="cpd_activity_type" COMMENT="Defines the activity types" PREVIOUS="cpd" NEXT="cpd_status">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="cpd_status" COMMENT="Defines the statuses" PREVIOUS="cpd_activity_type" NEXT="cpd_year">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="display_order"/>
+                <FIELD NAME="display_order" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="name"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="cpd_status_name_unique"/>
+                <KEY NAME="cpd_status_name_unique" TYPE="unique" FIELDS="name" PREVIOUS="primary"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="cpd_year" COMMENT="Defines the periods to view CPD data" PREVIOUS="cpd_status">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="startdate"/>
+                <FIELD NAME="startdate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="enddate"/>
+                <FIELD NAME="enddate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="startdate"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+    </TABLES>
 </XMLDB>

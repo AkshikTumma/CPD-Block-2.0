@@ -1,4 +1,5 @@
 <?php
+
 $string['enter_view_report'] = 'Enter/View CPD Report';
 $string['cpd_reports'] = 'CPD Reports';
 $string['settings_str'] = 'Settings';
@@ -21,7 +22,7 @@ $string['startdate'] = 'Start Date';
 $string['completiondate'] = 'Completion Date';
 $string['timetaken'] = 'Time taken';
 $string['status'] = 'Status';
-$string['blank'] =' ';
-$stirng['hello'] = 'Edit';
+$string['blank'] = ' ';
+#$stirng['hello'] = 'Edit';// Unused and redunant reference of Edit
 $string['delete'] = 'Delete';
 $string['edit'] = 'Edit';
