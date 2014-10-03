@@ -41,7 +41,11 @@ $systemcontext = CONTEXT_SYSTEM::instance();
 require_capability('report/cpd:userview', $systemcontext);
 
 // Log request
-add_to_log(SITEID, "admin", "report capability", "report/cpd/index.php");
+//add_to_log(SITEID, "admin", "report capability", "report/cpd/index.php");
+//Replacing add_to_log() with $event->trigger()
+$eventparams = array('context' => context_course::instance(SITEID));
+$event = \core\event\course_viewed::create($eventparams);
+$event->trigger();
 
 if ($delete_id = optional_param('delete', NULL, PARAM_INT)) {
     delete_cpd_record($delete_id);
