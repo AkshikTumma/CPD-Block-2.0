@@ -533,7 +533,8 @@ function process_activity_form(&$data, $redirect) {
             $result = $DB->insert_record('cpd', $data);
         }
         if ($result) {
-            redirect($redirect);
+//            redirect($redirect); // Interrputs the page navigation for a small time
+            echo"<script>window.location = '$redirect'</script>";
             exit;
         } else {
             $errors[] = 'Unable to update records.';
