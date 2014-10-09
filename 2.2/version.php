@@ -1,4 +1,5 @@
 <?php
-    $plugin->version = 2014062500;
-    $plugin->requires = 2010112400;
+
+$plugin->version = 2014100900;
+$plugin->requires = 2010112400;
 
