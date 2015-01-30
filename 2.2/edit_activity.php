@@ -32,7 +32,9 @@ require_once('edit_activity_form.php');
 require_once('lib.php');
 
 require_login(SITEID, false);
-
+//
+$systemcontext = CONTEXT_SYSTEM::instance();
+require_capability('report/cpd:adminview', $systemcontext);
 global $USER, $CFG, $DB;
 
 $cpdyearid = required_param('cpdyearid', PARAM_INT);

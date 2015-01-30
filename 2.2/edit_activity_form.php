@@ -27,6 +27,9 @@
 class edit_activity_form extends moodleform {
 
     function definition() {
+        global $USER;
+        $context = CONTEXT_USER::instance($USER->id, IGNORE_MISSING);
+        //
         $mform = & $this->_form;
         $mform->addElement('header', 'addactivity', 'Add an activity');
         $mform->addElement('hidden', 'cpdyearid', $this->_customdata['cpdyearid']);
@@ -42,7 +45,17 @@ class edit_activity_form extends moodleform {
         $mform->addElement('textarea', 'development_need', 'Location', array('rows' => '2', 'cols' => '40'));
         $mform->addElement('textarea', 'description', 'Short Description', array('rows' => '4', 'cols' => '40'));
         $mform->addElement('textarea', 'activity', 'Instructor(s)', array('rows' => '2', 'cols' => '40'));
-
+        // Adding Verified field and notes textarea based on user privileges
+        // Only admin/teacher has access to edit or verify CPD records.
+        if (has_capability('report/cpd:adminview', $context)) {
+            $mform->addElement('advcheckbox', 'verified', 'Verified');
+            $mform->addElement('textarea', 'notes', 'Notes', array('rows' => 2, 'cols' => '40'));
+        } else {
+            $mform->addElement('advcheckbox', 'verified', 'Verified');
+            $mform->addElement('textarea', 'notes', 'Notes', array('rows' => 2, 'cols' => '40'));
+            $mform->hardFreeze('notes');
+            $mform->hardFreeze('verified');
+        }
         if ($this->_customdata['activity_types']) {
             $mform->addElement('select', 'activitytypeid', 'Activity Type', $this->_customdata['activity_types']);
         }

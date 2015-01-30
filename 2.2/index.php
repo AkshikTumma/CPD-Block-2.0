@@ -62,6 +62,8 @@ $columns = array(
     'development_need' => 'Location',
     'description' => 'Short Description',
     'activity' => 'Instructor(s)',
+    'verified' => 'Verified', // Added new columns Verified and Notes
+    'notes' => 'Notes',
     'activity_type' => 'Activity type',
     'start_date' => 'Start date',
     'due_date' => 'Completion Date',
@@ -137,13 +139,23 @@ if (empty($cpd_records)) {
 
 $filter->display();
 
+echo '<table class="boxalignleft"><tr class="tr_btn">';
+echo '<td class="td_btn">';
 // Add activity button
 if ($cpd_years && $cpdyearid) {
     echo '<form name="addcpd" method="get" action="edit_activity.php">';
     echo '<input type="hidden" name="cpdyearid" value="' . $cpdyearid . '">';
     echo '<input type="submit" value="Add Activity">';
     echo '</form>';
+    echo '</td>';
+    // Add Upload button for uploading CPD Records
+//    echo '<td class="td_btn">';
+//    echo '<form name="importcpd" method="get" action="import_cpd.php">';
+//    echo '<input type ="submit" value ="Upload CPD Records">';
+//    echo '</form>';
+//    echo '</td>';
 }
+echo '</tr></table>';
 
 if ($cpd_records) {
     if (!empty($cpd_years[$cpdyearid])) {
@@ -156,6 +168,10 @@ if ($cpd_records) {
     $outputtableheader[] = get_string('location', 'block_cpd_block');
     $outputtableheader[] = get_string('desc', 'block_cpd_block');
     $outputtableheader[] = get_string('instructor', 'block_cpd_block');
+    // Added new columns Verified and Notes
+    $outputtableheader[] = get_string('verified', 'block_cpd_block');
+    $outputtableheader[] = get_string('notes', 'block_cpd_block');
+    //
     $outputtableheader[] = get_string('acttype', 'block_cpd_block');
     $outputtableheader[] = get_string('startdate', 'block_cpd_block');
     $outputtableheader[] = get_string('completiondate', 'block_cpd_block');
@@ -171,6 +187,7 @@ if ($cpd_records) {
     $outputtable->head = $outputtableheader;
     $outputtable->data = $cpd_records;
     $outputtable->head = $outputtableheader;
+    echo html_writer::start_tag('div', array('class' => 'no-overflow')); // For enabling horizontal scroll bar
     echo html_writer::table($outputtable);
 
 

@@ -111,7 +111,21 @@ function xmldb_block_cpd_block_upgrade($oldversion = 0) {
             }
         }
     }
+    // Add Verified checkbox field
+    if ($result && $oldversion < 2014100900) {
+        $table = new XMLDBTable('cpd');
+        $field = new XMLDBField('verified');
+        $field->setAttributes(XMLDB_TYPE_BOOLEAN, '1', null, null, null, null, null, null, 'verified');
+        $result = $result && $DB->get_manager()->add_field($table, $field);
+    }
 
+    // Add Notes textArea field
+    if ($result && $oldversion < 2014100900) {
+        $table = new XMLDBTable('cpd');
+        $field = new XMLDBField('notes');
+        $field->setAttributes(XMLDB_TYPE_TEXT, 'big', null, null, null, null, null, null, 'notes');
+        $result = $result && $DB->get_manager()->add_field($table, $field);
+    }
     return $result;
 }
 

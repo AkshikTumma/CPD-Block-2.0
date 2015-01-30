@@ -10,8 +10,10 @@
                 <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="objective"/>
                 <FIELD NAME="objective" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="development_need"/>
                 <FIELD NAME="development_need" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="objective" NEXT="activitytypeid"/>
-                <FIELD NAME="activitytypeid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="development_need" NEXT="activity"/>
-                <FIELD NAME="activity" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="activitytypeid" NEXT="duedate"/>
+                <FIELD NAME="activitytypeid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="development_need" NEXT="verified"/>
+                <FIELD NAME="verified" TYPE="boolean" LENGTH="1" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="activitytypeid" NEXT="notes"/>
+                <FIELD NAME="notes" TYPE="text" LENGTH="big" NOTNULL="false"  SEQUENCE="false" PREVIOUS="verified" NEXT="activity"/>
+                <FIELD NAME="activity" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="notes" NEXT="duedate"/>
                 <FIELD NAME="duedate" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="activity" NEXT="startdate"/>
                 <FIELD NAME="startdate" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="duedate" NEXT="statusid"/>
                 <FIELD NAME="statusid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="startdate" NEXT="cpdyearid"/>

@@ -36,9 +36,11 @@
  */
 function get_cpd_records($filter = null, $editable = false, $extra = array()) {
     global $CFG, $USER, $DB, $OUTPUT;
-
+    // Added c.verified and c.notes columns in mdl_cpd table 
+    // Updated  install.xml with the same columns 
+    // Used the same in the query to get data
     $sql = "
-        select	c.id, c.userid, c.objective, c.development_need, att.name as activitytype, c.activity, 
+        select	c.id, c.userid, c.objective, c.development_need, att.name as activitytype,c.verified,c.notes, c.activity,
 		c.duedate, c.startdate, s.name as status, c.timetaken, c.description, c.ceus, c.cpdyearid, u.firstname, u.lastname
 	from 	{cpd} as c
 	join	{user} as u
@@ -100,8 +102,9 @@ function get_cpd_records($filter = null, $editable = false, $extra = array()) {
             if (isset($extra['user_name']) && $extra['user_name']) {
                 $row_data[] = "$row->firstname $row->lastname";
             }
-            //array_push($row_data, $row->objective, $row->development_need, $row->description, $row->activity, $row->activitytype,  $duedate, $startdate, $enddate, $row->status, $timetaken, $row->ceus);
-            array_push($row_data, $row->objective, $row->development_need, $row->description, $row->activity, $row->activitytype, $startdate, $duedate, $row->status, $timetaken, $row->ceus); //ADDED 11/16
+            //array_push($row_data, $row->objective, $row->development_need, $row->description, $row->activity, $row->activitytype,  $duedate, $startdate, $enddate, $row->status, $timetaken, $row->ceus);//ADDED 11/16
+            $checked = ( $row->verified == 1) ? "checked" : "";
+            array_push($row_data, $row->objective, $row->development_need, $row->description, $row->activity, "<input type='checkbox' {$checked} disabled='disabled'> </input>", $row->notes, $row->activitytype, $startdate, $duedate, $row->status, $timetaken, $row->ceus);
 
             if ($editable) {
                 $row_data[] = "<a href=\"$CFG->wwwroot/blocks/cpd_block/edit_activity.php?id={$row->id}&cpdyearid={$row->cpdyearid}\">edit</a>";
@@ -162,8 +165,16 @@ function download_csv($filename, $headers, $data) {
 
     $header = '"' . implode('","', $headers) . '"';
     echo $header . "\n";
-
+    // Added code snippet to display exact values of verified flag
     foreach ((array) $data as $row) {
+        for ($i = 0; $i < count($row); $i++) {
+            if (strpos($row[$i], 'input')) {
+                if (strpos($row[$i], 'checked'))
+                    $row[$i] = 'True';
+                else
+                    $row[$i] = 'False';
+            }
+        }
         $text = '"' . implode('","', $row) . '"';
         echo $text . "\n";
     }
@@ -192,13 +203,20 @@ function download_xls($filename, $headers, $data) {
         $ws->write_string(0, $n, $value);
         $n = $n + 1;
     }
-
+    // Added code snippet to display exact values of verified flag
     foreach ((array) $data as $i => $row) {
         foreach ($row as $j => $value) {
-            $ws->write_string($i + 1, $j, $value);
+            if (strpos($value, 'input')) {
+                if (strpos($value, 'checked')) {
+                    $ws->write_string($i + 1, $j, 'True');
+                } else {
+                    $ws->write_string($i + 1, $j, 'False');
+                }
+            } else {
+                $ws->write_string($i + 1, $j, $value);
+            }
         }
     }
-
     $wb->close();
 }
 
