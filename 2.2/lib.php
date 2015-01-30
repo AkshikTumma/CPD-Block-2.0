@@ -107,8 +107,8 @@ function get_cpd_records($filter = null, $editable = false, $extra = array()) {
             array_push($row_data, $row->objective, $row->development_need, $row->description, $row->activity, "<input type='checkbox' {$checked} disabled='disabled'> </input>", $row->notes, $row->activitytype, $startdate, $duedate, $row->status, $timetaken, $row->ceus);
 
             if ($editable) {
-                $row_data[] = "<a href=\"$CFG->wwwroot/blocks/cpd_block/edit_activity.php?id={$row->id}&cpdyearid={$row->cpdyearid}\">edit</a>";
-                $row_data[] = "<a onclick=\"return confirm('Are you sure you want to delete?');\" href=\"$CFG->wwwroot/blocks/cpd_block/index.php?delete={$row->id}&cpdyearid={$row->cpdyearid}\">delete</a>";
+                $row_data[] = "<a href=\"$CFG->wwwroot/blocks/cpd_block/edit_activity.php?id={$row->id}&cpdyearid={$row->cpdyearid}\">Edit</a>";
+                $row_data[] = "<a onclick=\"return confirm('Are you sure you want to delete?');\" href=\"$CFG->wwwroot/blocks/cpd_block/index.php?delete={$row->id}&cpdyearid={$row->cpdyearid}\">Delete</a>";
             }
             $table_data[] = $row_data;
         }
