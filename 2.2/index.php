@@ -55,7 +55,7 @@ $cpdyearid = optional_param('cpdyearid', NULL, PARAM_INT); // Current CPD year i
 $download = optional_param('download', NULL, PARAM_RAW);
 $print = optional_param('print', NULL, PARAM_RAW);
 $xls = optional_param('xls', NULL, PARAM_RAW);
-
+$PAGE_SIZE = 5;
 // CPD Report headers
 $columns = array(
     'objective' => 'Training/Event Title',
@@ -141,7 +141,7 @@ $filter->display();
 
 echo '<table class="boxalignleft"><tr class="tr_btn">';
 echo '<td class="td_btn">';
-// Add activity button
+// Add Activity button
 if ($cpd_years && $cpdyearid) {
     echo '<form name="addcpd" method="get" action="edit_activity.php">';
     echo '<input type="hidden" name="cpdyearid" value="' . $cpdyearid . '">';
@@ -149,11 +149,12 @@ if ($cpd_years && $cpdyearid) {
     echo '</form>';
     echo '</td>';
     // Add Upload button for uploading CPD Records
-//    echo '<td class="td_btn">';
-//    echo '<form name="importcpd" method="get" action="import_cpd.php">';
-//    echo '<input type ="submit" value ="Upload CPD Records">';
-//    echo '</form>';
-//    echo '</td>';
+    echo '<td class="td_btn">';
+    echo '<form name="importcpd" method="get" action="import_cpd.php">';
+    echo '<input type="hidden" name="cpdyearid" value="' . $cpdyearid . '">';
+    echo '<input type ="submit" value ="Upload CPD Records">';
+    echo '</form>';
+    echo '</td>';
 }
 echo '</tr></table>';
 
@@ -189,7 +190,6 @@ if ($cpd_records) {
     $outputtable->head = $outputtableheader;
     echo html_writer::start_tag('div', array('class' => 'no-overflow')); // For enabling horizontal scroll bar
     echo html_writer::table($outputtable);
-
 
     if (!empty($print)) {
         // Disclaimer

@@ -27,18 +27,24 @@ $string['completiondate'] = 'Completion Date';
 $string['timetaken'] = 'Time taken';
 $string['status'] = 'Status';
 $string['blank'] = ' ';
-#$stirng['hello'] = 'Edit';// Unused and redunant reference of Edit
 $string['delete'] = 'Delete';
 $string['edit'] = 'Edit';
 
 # Labels for CPD Records Upload Form
+$string['cpdfile'] = 'File';
+$string['cpdfile_help'] = 'This file must be a CSV file.';
 $string['csvdelimiter'] = 'CSV delimiter';
+$string['csvdelimiter_help'] = 'CSV delimiter of the CSV file.';
+$string['encoding'] = 'Encoding';
+$string['encoding_help'] = 'Encoding of the CSV file.';
 $string['defaultvalues'] = 'Default values';
 $string['uploadcpdrecords'] = 'Upload CPD Records';
 $string['upload'] = 'Upload';
-$string['file'] = 'File';
 $string['rowpreviewnum'] = 'Preview rows';
-$string['encoding'] = 'Encoding';
+$string['rowpreviewnum_help'] = 'Number of rows from the CSV file that will be previewed in the next page. This option exists in
+order to limit the next page size.';
+#
+$string['csvfileerror'] = 'There is something wrong with the format of the CSV file. Please check the number of headings and columns match, and that the delimiter and file encoding are correct: {$a}';
 #
 $string['uploadcpd'] = 'Upload CPDs';
 $string['uploadcpd_help'] = 'CPD records may be uploaded via text file. The format of the file should be as follows:
@@ -47,3 +53,6 @@ $string['uploadcpd_help'] = 'CPD records may be uploaded via text file. The form
 * Each record is a series of data separated by commas (or other delimiters)
 * The first record contains a list of fieldnames defining the format of the rest of the file
 * Required fieldnames are Location, Instructor, Activity Type, Start Date, Status';
+#
+$string['uploadcpdresult'] = 'Upload CPDs Result';
+$string['uploadcpdpreview'] = 'Upload CPDs Preview';

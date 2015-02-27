@@ -516,7 +516,7 @@ function process_activity_form(&$data, $redirect) {
     $data->userid = $USER->id;
 
     if (!$cpdyear = $DB->get_record('cpd_year', array('id' => $data->cpdyearid))) {
-        error('Invalid CPD Year');
+        print_error('Invalid CPD Year');
     }
 
     if ($status = $DB->get_record('cpd_status', array('id' => $data->statusid))) {
@@ -559,4 +559,102 @@ function process_activity_form(&$data, $redirect) {
         }
     }
     return $errors;
+}
+
+/**
+ * Validation callback function - verified the column line of csv file.
+ * Converts standard column names to lowercase.
+ * @param csv_import_reader $cir
+ * @param array $stdfields standard user fields
+ * @param array $profilefields custom profile fields
+ * @param moodle_url $returnurl return url in case of any error
+ * @return array list of fields
+ */
+function validate_cpd_columns(csv_import_reader $cir, $stdfields, $profilefields, moodle_url $returnurl) {
+    $columns = $cir->get_columns();
+
+    if (empty($columns)) {
+        $cir->close();
+        $cir->cleanup();
+        print_error('cannotreadtmpfile', 'error', $returnurl);
+    }
+    if (count($columns) < 2) {
+        $cir->close();
+        $cir->cleanup();
+        print_error('csvfewcolumns', 'error', $returnurl);
+    }
+    // Valdiate no. of columns
+    $processed = array();
+    foreach ($columns as $key => $unused) {
+        $field = $columns[$key];
+        $lcfield = core_text::strtolower($field);
+        if (in_array($field, $stdfields) or in_array($lcfield, $stdfields)) {
+            // standard fields are only lowercase
+            $newfield = $lcfield;
+        } else if (in_array($field, $profilefields)) {
+            // exact profile field name match - these are case sensitive
+            $newfield = $field;
+        } else if (in_array($lcfield, $profilefields)) {
+            // hack: somebody wrote uppercase in csv file, but the system knows only lowercase profile field
+            $newfield = $lcfield;
+        } else {
+            $cir->close();
+            $cir->cleanup();
+            print_error('invalidfieldname', 'error', $returnurl, $field);
+        }
+        if (in_array($newfield, $processed)) {
+            $cir->close();
+            $cir->cleanup();
+            print_error('duplicatefieldname', 'error', $returnurl, $newfield);
+        }
+        $processed[$key] = $newfield;
+    }
+    return $processed;
+}
+
+/**
+ * 
+ * @global type $USER
+ * @global type $DB
+ * @param type $cpddata CPD  data to update in mdl_cpd table
+ * @param type $redirect Redirects to this URL if the form was processed successfully.
+ * @return string retun any errors during updating records to database.
+ */
+function upload_cpd_data(&$cpddata, $redirect) {
+
+    global $USER, $DB;
+    $errors = array();
+    // Insert distinct records to mdl_cpd table
+    if (!empty($cpddata)) {
+        foreach ($cpddata as $k => $data) {
+            if (!empty($data)) {
+                $result = $DB->insert_record('cpd', $data);
+                if (!$result) {
+                    $errors[] = 'Error updating cpd records.';
+                    break;
+                }
+            }
+        }
+        if ($result) {
+            echo"<script>window.location = '$redirect'</script>";
+            exit;
+        }
+    }
+    return $errors;
+}
+
+/**
+ * 
+ * @global type $DB
+ * @param type $userid userid of the current logged in user
+ * @return string user email
+ */
+function get_user_email(&$userid) {
+    global $DB;
+    $user = $DB->get_record('user', array('id' => $userid));
+    if ($user) {
+        return $user->email;
+    } else {
+        return "Invalid User";
+    }
 }

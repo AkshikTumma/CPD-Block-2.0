@@ -45,13 +45,13 @@ $redirect = "$CFG->wwwroot/blocks/cpd_block/index.php?cpdyearid=$cpdyearid"; /* 
 
 if (!empty($cpdyearid)) {
     if (!$cpdyear = $DB->get_record('cpd_year', array('id' => $cpdyearid))) { //get cpd year start and end
-        error('Invalid CPD Year');
+        print_error('Invalid CPD Year');
     }
 }
 
 if (!empty($cpdid)) {
     if (!$cpd_record = $DB->get_record('cpd', array('id' => $cpdid))) {
-        error('Invalid CPD Activity');
+        print_error('Invalid CPD Activity');
     }
 }
 
