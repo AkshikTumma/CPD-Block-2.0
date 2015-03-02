@@ -124,7 +124,7 @@ if (empty($importid)) {
 $data = array();
 $cir->init();
 $linenum = 1; //column header is first line
-while ($linenum <= $previewrows and $fields = $cir->next()) {
+while ($fields = $cir->next()) {
     $linenum++;
     $rowcols = array();
     $rowcols['line'] = $linenum;
@@ -132,9 +132,6 @@ while ($linenum <= $previewrows and $fields = $cir->next()) {
         $rowcols[$key] = s(trim($field));
     }
     $data[] = $rowcols;
-}
-if ($fields = $cir->next()) {
-    $data[] = array_fill(0, count($fields) + 2, '...');
 }
 $cir->close();
 
@@ -148,7 +145,9 @@ $cir->close();
 $newdata = array();
 $cpddata = array();
 $duplicateHash = array();
+$rowcount = 0;
 foreach ($data as $i => $row) {
+    $rowcount++;
     // Split string to date format : Start Date
     $syear = substr($row[6], 0, 4);
     $smonth = substr($row[6], 4, 2);
@@ -195,7 +194,10 @@ foreach ($data as $i => $row) {
     $hash = str_replace(" ", "", $hash);
     // Remove duplicate records from csv file
     if (!array_key_exists($hash, $duplicateHash)) {
-        $newdata[] = $rowcols;
+        // Limit the view of the rows in Table to the preview no. of rows set by user.
+        if ($rowcount <= $previewrows) {
+            $newdata[] = $rowcols;
+        }
         $cpddata[] = $cpddatacols;
         $duplicateHash[$hash] = 1;
     }
@@ -216,6 +218,10 @@ $header[] = get_string('timetaken', 'block_cpd_block');
 $header[] = get_string('ceus', 'block_cpd_block');
 //
 $table->head = $header;
+// To indicate that there are more rows but only $previewrow value of rows are displayed
+if ($rowcount > $previewrows) {
+    $newdata[] = array_fill(0, count($header), '...');
+}
 $table->data = $newdata;
 
 $mform2 = new cpd_read_form_2(null, array('cpdyearid' => $cpdyearid, 'importid' => $importid));
