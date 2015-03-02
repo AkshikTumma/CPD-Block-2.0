@@ -74,7 +74,7 @@ $PAGE->navbar->add('Upload CPDs');
 // Array of all valid fields for validation
 $STD_FIELDS = array('firstname', 'middle', 'lastname', 'Attendance Code',
     'Course Title', 'Course name',
-    'Course start date', 'Course end date', 'Trainer',
+    'Course start date', '', 'Course end date', 'Trainer',
     'Location', 'City', 'CEUs', 'Training hours',);
 
 // Include all name fields.
@@ -157,9 +157,9 @@ foreach ($data as $i => $row) {
     $stime = strtotime($sdate);
     $startDate = date('d-m-Y', $stime);
     // Split string to date format : End Date
-    $eyear = substr($row[7], 0, 4);
-    $emonth = substr($row[7], 4, 2);
-    $eday = substr($row[7], 6, 2);
+    $eyear = substr($row[8], 0, 4);
+    $emonth = substr($row[8], 4, 2);
+    $eday = substr($row[8], 6, 2);
     $edate = $eday . "-" . $emonth . "-" . $eyear;
     $etime = strtotime($edate);
     $endDate = date('d-m-Y', $etime);
@@ -174,22 +174,22 @@ foreach ($data as $i => $row) {
             print_error('Start date must be within the CPD year (' . date("d M Y", $cpdStartDate) . ' - ' . date("d M Y", $cpdEndDate) . ').');
         }
     }
-    $rowcols = array($row[4], $row[9], $row[5], $row[8], "CPD-02", $startDate, $endDate, "Status CPD-01", $row[12], $row[11]);
+    $rowcols = array($row[4], $row[10], $row[5], $row[9], "CPD-02", $startDate, $endDate, "Status CPD-01", $row[13], $row[12]);
     $cpddatacols = array(
         "userid" => $userid,
         "objective" => $row[4],
-        "development_need" => $row[9],
+        "development_need" => $row[10],
         "activitytypeid" => "1",
         "verified" => "0",
         "notes" => "",
-        "activity" => $row[8],
+        "activity" => $row[9],
         "duedate" => strtotime($endDate),
         "startdate" => strtotime($startDate),
         "statusid" => "1",
         "cpdyearid" => $cpdyearid,
-        "timetaken" => $row[12] * 60,
+        "timetaken" => $row[13] * 60,
         "description" => $row[5],
-        "ceus" => $row[11],
+        "ceus" => $row[12],
     );
     $hash = $row[4] . "-" . $row[9] . "-" . $row[8] . "-" . strtotime($endDate) . "-" . strtotime($startDate) . "-" . ($row[12] * 60) . "-" . $row[5] . "-" . $row[11];
     $hash = str_replace(" ", "", $hash);
