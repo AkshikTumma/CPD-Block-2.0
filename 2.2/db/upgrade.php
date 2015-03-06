@@ -115,7 +115,7 @@ function xmldb_block_cpd_block_upgrade($oldversion = 0) {
     if ($result && $oldversion < 2014100900) {
         $table = new XMLDBTable('cpd');
         $field = new XMLDBField('verified');
-        $field->setAttributes(XMLDB_TYPE_BOOLEAN, '1', null, null, null, null, null, null, 'verified');
+        $field->setAttributes(XMLDB_TYPE_CHAR, '1', null, null, null, null, null, null, 'activitytypeid');
         $result = $result && $DB->get_manager()->add_field($table, $field);
     }
 
@@ -123,7 +123,7 @@ function xmldb_block_cpd_block_upgrade($oldversion = 0) {
     if ($result && $oldversion < 2014100900) {
         $table = new XMLDBTable('cpd');
         $field = new XMLDBField('notes');
-        $field->setAttributes(XMLDB_TYPE_TEXT, 'big', null, null, null, null, null, null, 'notes');
+        $field->setAttributes(XMLDB_TYPE_TEXT, 'big', null, null, null, null, null, null, 'verified');
         $result = $result && $DB->get_manager()->add_field($table, $field);
     }
     return $result;
